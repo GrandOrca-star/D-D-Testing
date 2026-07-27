@@ -42,3 +42,30 @@ goblin = Character(name="Goblin", char_class="Monster", hp=10, ac=11, str_mod=1)
 
 # ทดสอบ Hero โจมตี Goblin
 hero.attack(goblin)
+# --- 3. จำลองการต่อสู้สลับรอบ (Turn-Based Battle) ---
+print("=== D&D Combat Loop Testing ===")
+
+# สร้างตัวละคร Arthur (Hero) และ Goblin
+hero = Character(name="Arthur", char_class="Fighter", hp=20, ac=14, str_mod=3)
+goblin = Character(name="Goblin", char_class="Monster", hp=12, ac=11, str_mod=1)
+
+# วนลูปต่อสู้จนกว่าจะมีคน HP หมด
+round_num = 1
+while hero.current_hp > 0 and goblin.current_hp > 0:
+    print(f"\n--- Round {round_num} ---")
+    
+    # รอบของ Hero โจมตี Goblin
+    hero.attack(goblin)
+    
+    # เช็กว่า Goblin ตายหรือยัง ถ้ายังไม่ตาย ให้ Goblin สวนกลับ
+    if goblin.current_hp > 0:
+        goblin.attack(hero)
+        
+    round_num += 1
+
+# สรุปผลการต่อสู้
+print("\n=== การต่อสู้สิ้นสุดลง ===")
+if hero.current_hp > 0:
+    print(f"🎉 {hero.name} เป็นฝ่ายชนะ!")
+else:
+    print(f"💀 {hero.name} ถูกพ่ายแพ้ในการต่อสู้...")
